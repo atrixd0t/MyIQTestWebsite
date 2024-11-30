@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Test - Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Link to the JS file -->
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the IQ Testing Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About IQ</a></li>
+                <li><a href="#faq">FAQs</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about">
+        <h2>What is IQ?</h2>
+        <p>IQ, or Intelligence Quotient, measures a person's cognitive abilities and logical reasoning skills. A higher IQ is often associated with better problem-solving abilities.</p>
+    </section>
+
+    <section id="graph">
+        <h2>Average IQ Across the Globe</h2>
+        <canvas id="iqChart" width="400" height="200"></canvas>
+    </section>
+
+    <section id="start-test">
+        <h2>Are you ready to test your IQ?</h2>
+        <button class="start-btn" onclick="window.location.href='test.html'">Start the Test</button>
+    </section>
+
+    <section id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <p><strong>Q:</strong> What does an IQ score mean?<br><strong>A:</strong> It indicates cognitive abilities and problem-solving skills.</p>
+        <p><strong>Q:</strong> Can IQ be improved?<br><strong>A:</strong> Yes, through cognitive training, problem-solving, and learning new skills.</p>
+    </section>
+
+    <footer>
+        <p>Contact us at <a href="mailto:aryandhage1234@gmail.com">aryandhage1234</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('iqChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['USA', 'India', 'Germany', 'Japan', 'Australia'],
+                datasets: [{
+                    label: 'Average IQ',
+                    data: [98, 82, 100, 105, 99],
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
+>

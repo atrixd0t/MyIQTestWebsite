@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Test</title>
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Link to the JS file -->
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+        }
+        #test-container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #4caf50;
+        }
+        .options button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .options button:hover {
+            background: #45a049;
+        }
+        #progress-container {
+            width: 100%;
+            background-color: #ddd;
+            height: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        #progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="test-container">
+        <h1>IQ Test</h1>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <h2 id="question-text">Question will appear here</h2>
+        <div class="options"></div>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "What comes next in the series: 3, 16, 5, 36, 7, ?", options: ["30", "36", "64", "49"], correct: 2 },
+    { question: "What comes next in the series: 1, 4, 9, 16, 25, ?", options: ["30", "36", "49", "64"], correct: 1 },
+            { question: "Identify the odd one out: 13, 27, 39, 52, 71", options: ["13", "27", "39", "52"], correct: 2 },
+            { question: "Hand is to glove as foot is to:", options: ["Sock", "Shoe", "Sandal", "Sole"], correct: 1 },
+            { question: "If all cats are mammals, and some mammals are lions, then:", options: ["All cats are lions.", "Some mammals are cats.", "No lions are cats.", "Some lions are not mammals."], correct: 1 },
+            { question: "What comes next in the series: BA, DC, FE, HG, ?", options: ["JI", "KL", "IH", "IJ"], correct: 0 },
+            { question: "There are 10 people in a room. If each person shakes hands with every other person exactly once, how many handshakes occur?", options: ["45", "50", "90", "100"], correct: 0 },
+            { question: "Which letter completes the pattern: A, C, F, J, ?", options: ["M", "O", "N", "L"], correct: 1 },
+            { question: "Which day will it be 100 days from today, if today is Tuesday?", options: ["Sunday", "Monday", "Thursday", "Tuesday"], correct: 2 },
+            { question: "What comes next in the pattern: ▲, ●, ▲, ●, ▲, ?", options: ["▲", "●", "♦", "■"], correct: 1 },
+            { question: "What number completes the pattern: 16, 23, 31, 40, ?", options: ["49", "48", "50", "47"], correct: 0 },
+            { question: "What comes next: 2, 6, 12, 20, 30, ?", options: ["36", "40", "42", "50"], correct: 2 },
+            { question: "If 3+5=28, 4+7=47, then what is 6+8=?", options: ["68", "86", "48", "69"], correct: 0 },
+            { question: "Which shape does not fit: Square, Circle, Triangle, Rectangle", options: ["Square", "Circle", "Triangle", "Rectangle"], correct: 1 },
+            { question: "If a cube has all faces painted and is cut into 27 smaller cubes, how many have one face painted?", options: ["6", "8", "12", "24"], correct: 2 },
+            { question: "Which is a valid deduction? All humans are mortal. Socrates is human. Therefore:", options: ["Socrates is immortal.", "Socrates is a god.", "Socrates is mortal.", "Socrates is a philosopher."], correct: 2 },
+    { question: "Which number is divisible by 3?", options: ["10", "12", "25", "19"], correct: 1 },
+    { question: "What is the capital of France?", options: ["Paris", "Berlin", "Rome", "Madrid"], correct: 0 },
+    { question: "Which of the following is a fruit?", options: ["Apple", "Potato", "Carrot", "Broccoli"], correct: 0 },
+    { question: "If 2x = 14, then x = ?", options: ["5", "7", "8", "6"], correct: 1 },
+    { question: "Which shape has 3 sides?", options: ["Triangle", "Circle", "Square", "Pentagon"], correct: 0 },
+    { question: "What is 5 x 6?", options: ["28", "25", "30", "32"], correct: 2 },
+    { question: "Which letter comes after F?", options: ["G", "H", "I", "J"], correct: 0 },
+    { question: "Which of the following is an even number?", options: ["7", "5", "8", "9"], correct: 2 },
+    { question: "Which planet is closest to the Sun?", options: ["Mercury", "Venus", "Earth", "Mars"], correct: 0 },
+    { question: "What is 15 divided by 3?", options: ["6", "3", "5", "7"], correct: 2 },
+    { question: "What is the color of the sky on a clear day?", options: ["Blue", "Red", "Green", "Purple"], correct: 0 },
+    { question: "Which animal barks?", options: ["Dog", "Cat", "Fish", "Bird"], correct: 0 },
+    { question: "If 100 is reduced by 50, what remains?", options: ["60", "50", "40", "30"], correct: 1 },
+    { question: "Which number is larger: 9 or 6?", options: ["5", "6", "9", "4"], correct: 2 }
+];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        document.addEventListener('DOMContentLoaded', loadQuestion);
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question-text');
+            const optionsContainer = document.querySelector('.options');
+
+            questionElement.innerText = questions[currentQuestion].question;
+            optionsContainer.innerHTML = questions[currentQuestion].options
+                .map((option, index) => `<button onclick="selectAnswer(${index})">${option}</button>`)
+                .join('');
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (selectedIndex === questions[currentQuestion].correct) score += 5;
+
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+                updateProgressBar();
+            } else {
+                showResults();
+            }
+        }
+
+        function updateProgressBar() {
+            document.getElementById('progress-bar').style.width = `${(currentQuestion / questions.length) * 100}%`;
+        }
+
+        function showResults() {
+            document.getElementById('test-container').innerHTML = `
+                <h2>Your IQ: ${score}</h2>
+                <p>Here’s what your IQ score means:</p>
+                <ul>
+                    <li><b>70-90:</b> Below Average</li>
+                    <li><b>90-110:</b> Average</li>
+                    <li><b>110-130:</b> Above Average</li>
+                    <li><b>130+:</b> Genius Level</li>
+                </ul>
+                <button onclick="window.location.href='index.html'">Back to Home</button>
+            `;
+        }
+    </script>
+
+</body>
+</html>
